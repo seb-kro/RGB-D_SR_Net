@@ -23,7 +23,7 @@ def setUpModule():
 
 class UntrainedTest(unittest.TestCase):
 
-    def testTrainedNet(self):
+    def testUntrainedNet(self):
         global ds
         net = single_image_sr_net.SingleImageSrNet()
         (mse_keras, mse_scikit, predictions) = net.test(dataset=ds)
@@ -35,7 +35,7 @@ class UntrainedTest(unittest.TestCase):
 
 class TrainedTest(unittest.TestCase):
 
-    def testUntrainedNet(self):
+    def testTrainedNet(self):
         global ds
         print(ds.lr_inputs.shape)
         print(ds.sr_outputs.shape)

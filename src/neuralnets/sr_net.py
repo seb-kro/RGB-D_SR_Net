@@ -24,7 +24,7 @@ class SrNet(object):
         
         :param Dataset dataset: Dataset of training data.
         '''
-        self.model.fit(dataset.lr_inputs, dataset.sr_outputs, batch_size=32, nb_epoch=10, verbose=2)
+        self.model.fit(dataset.lr_inputs, dataset.sr_outputs, batch_size=6, nb_epoch=1, verbose=2)
         
     def test(self, dataset):
         '''
@@ -36,3 +36,10 @@ class SrNet(object):
         predictions = self.model.predict(dataset.lr_inputs, batch_size=32, verbose=0)
         mse_scikit = mean_squared_error(dataset.sr_outputs.flatten(), predictions.flatten())
         return (mse_keras, mse_scikit, predictions)
+    
+    #TODO: define path/name in init
+    def save_weights(self, path):
+        self.model.save_weights(path)
+        
+    def load_weights(self, path):
+        self.model.load_weights(path)

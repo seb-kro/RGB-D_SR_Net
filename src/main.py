@@ -13,6 +13,7 @@ def main():
     '''
     print('Main');
     ds = Dataset()
+    ds.read(ds.input_paths[0])
     lr_sample = ds.lr_inputs[0,:,:,:]
     sr_sample = ds.sr_outputs[0,:,:,:]
     print(ds.lr_inputs.shape)

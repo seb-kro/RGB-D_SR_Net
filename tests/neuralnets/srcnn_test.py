@@ -23,7 +23,7 @@ def setUpModule():
 @unittest.skip
 class UntrainedTest(unittest.TestCase):
 
-    def testTrainedNet(self):
+    def testUntrainedNet(self):
         global ds
         net = Srcnn()
         (mse_keras, mse_scikit, predictions) = net.test(dataset=ds)
@@ -34,18 +34,37 @@ class UntrainedTest(unittest.TestCase):
 
 
 class TrainedTest(unittest.TestCase):
-
-    def testUntrainedNet(self):
+    
+    @unittest.skip
+    def testTrainedNet(self):
         global ds
         print(ds.lr_inputs.shape)
         print(ds.sr_outputs.shape)
         net = Srcnn()
+        print('train')
         net.train(dataset=ds)
-#         (mse_keras, mse_scikit, predictions) = net.test(dataset=ds)
-#         assert mse_keras == mse_scikit
-#         print(mse_keras)
-#         pass
-#         pass
+        print('test')
+        (mse_keras, mse_scikit, predictions) = net.test(dataset=ds)
+        print(mse_keras)
+        assert mse_keras == mse_scikit
+        pass
+    
+    def testTraining(self):
+        global ds
+#         print(ds.lr_inputs.shape)
+#         print(ds.sr_outputs.shape)
+        net = Srcnn()
+        print('train')
+        epoch = 1
+        while True:
+            print('Epoch ' + str(epoch) + ' ...')
+            for input_path in ds.input_paths:
+                ds.read(input_path)
+                net.train(dataset=ds)
+            net.save_weights('data/test/srcnn/weights/epoch' + str(epoch))
+            epoch += 1
+            
+        pass
 
 
 if __name__ == "__main__":
